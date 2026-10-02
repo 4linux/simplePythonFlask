@@ -5,6 +5,7 @@ from project.models import Users
 #from sqlalchemy.orm import scoped_session,sessionmaker
 from project import db
 from sqlalchemy.exc import IntegrityError
+from werkzeug.security import generate_password_hash, check_password_hash
 from functools import wraps
 
 
@@ -36,7 +37,7 @@ def login():
             #db_session = dbSession()
             #user = db_session.query(Users).filter_by(name=request.form['name']).first()
             user = Users.query.filter_by(name=request.form['name']).first()
-            if user is not None and user.password == request.form['password']:
+            if user is not None and check_password_hash(user.password, request.form['password']):
                 session['logged_in'] = True
                 session['user_id'] = user.id
                 session['role'] = user.role
@@ -68,8 +69,7 @@ def register():
             new_user = Users(
                 request.form['name'],
                 request.form['email'],
-                request.form['password'],
-                request.form['confirm'])
+                generate_password_hash(request.form['password']))
             print(request.form['name'])
             try:
                 db.session.add(new_user)
@@ -77,6 +77,7 @@ def register():
                 flash('Obrigado por se registrar!!!')
                 return redirect(url_for('users.login'))
             except IntegrityError:
+                db.session.rollback()
                 error = 'Esse usuário ou email já foram registrados'
                 return render_template('register.html', form=form, error=error)
     return render_template('register.html', form=form, error=error)
