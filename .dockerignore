@@ -8,5 +8,5 @@ __pycache__/
 .*.swp
 reports/
 mariadb_data/
-manifest/
+deploy/
 docs/

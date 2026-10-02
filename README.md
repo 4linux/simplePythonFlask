@@ -2,6 +2,8 @@
 
 Aplicação de exemplo dos cursos de CI/CD da 4Linux: um pequeno catálogo de cursos escrito em Python 3 e Flask, com banco de dados MariaDB.
 
+![Tela com a lista de cursos](docs/tela-cursos.jpg)
+
 Ela existe para ser levada por um pipeline, e por isso possui:
 
 - Testes unitários (pytest)
@@ -132,6 +134,9 @@ docker build -t course_catalog:0.1 --build-arg APP_VERSION=0.1 .
 ├── tests/
 │   ├── unit/
 │   └── functional/
+├── deploy/                 # manifests Kubernetes (Kustomize)
+│   ├── base/
+│   └── overlays/           # homolog e production
 ├── Dockerfile
 └── docker-compose.yml
 ```

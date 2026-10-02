@@ -29,7 +29,8 @@ ARG APP_VERSION=dev
 ENV APP_VERSION=${APP_VERSION}
 
 RUN useradd --system --uid 1000 --no-create-home app
-USER app
+# UID numerico para o Kubernetes conseguir validar runAsNonRoot
+USER 1000
 
 EXPOSE 5000
 
