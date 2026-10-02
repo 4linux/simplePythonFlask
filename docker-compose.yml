@@ -1,45 +1,69 @@
-version: '2'
-
 services:
   web:
     container_name: simplePythonFlask
     image: simple-python-flask
     build:
       context: .
-      dockerfile: Dockerfile
+    environment:
+      DB_HOST: mariadb
+      DB_PASSWORD: qwe123qwe
+      APP_VERSION: compose
     ports:
       - 5000:5000
     depends_on:
-      - 'mariadb'
+      web_initiate_db:
+        condition: service_completed_successfully
 
   web_initiate_db:
     container_name: simple-python-flask_init_db
     image: simple-python-flask
-    entrypoint: ["python3","create_db.py"]
+    build:
+      context: .
+    command: ["python3", "create_db.py"]
+    environment:
+      DB_HOST: mariadb
+      DB_PASSWORD: qwe123qwe
     depends_on:
-    - 'mariadb'
+      mariadb:
+        condition: service_healthy
 
   mariadb:
     container_name: mariadb
-    image: mariadb:latest
-    ports:
-      - 3306:3306
+    image: mariadb:11
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: "qwe123qwe"
+      MARIADB_ROOT_PASSWORD: "qwe123qwe"
     volumes:
-      - ./mariadb_data:/var/lib/mysql
+      - mariadb_data:/var/lib/mysql
     healthcheck:
-        test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-ppass"]
-        interval: 30s
-        timeout: 20s
-        retries: 10
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
 
+  # Testes funcionais: docker compose --profile test run --rm functional
   selenium:
     container_name: selenium
     image: selenium/standalone-firefox
+    profiles: ["test"]
     ports:
       - 4444:4444
       - 7900:7900
-    restart: always
     shm_size: '2gb'
+
+  functional:
+    image: simple-python-flask-test
+    build:
+      context: .
+      target: test
+    profiles: ["test"]
+    command: ["python3", "tests/functional/test_functional.py"]
+    environment:
+      APP_URL: http://web:5000
+      SELENIUM_URL: http://selenium:4444/wd/hub
+    depends_on:
+      - web
+      - selenium
+
+volumes:
+  mariadb_data:

@@ -1,29 +1,99 @@
+/*
+Identidade visual 4Linux, baseada em https://4linux.com.br
+*/
+
+:root {
+  --4l-bg: #0c1b1b;
+  --4l-bg-deep: #011010;
+  --4l-surface: #10171d;
+  --4l-border: #3d4949;
+  --4l-accent: #12d7d3;
+  --4l-accent-dark: #0a9ba0;
+  --4l-text: #fbffff;
+  --4l-text-muted: #bcd1d1;
+}
+
+body {
+  background-color: var(--4l-bg);
+  background-image: linear-gradient(180deg, var(--4l-bg) 0%, var(--4l-bg-deep) 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--4l-text);
+  font-family: Inter, 'Source Sans 3', -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+a {
+  color: var(--4l-accent);
+}
+
+a:hover {
+  color: var(--4l-text);
+}
+
+.btn-primary,
+.btn-primary:focus {
+  background-color: var(--4l-accent);
+  border-color: var(--4l-accent);
+  color: var(--4l-bg-deep);
+  font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:not(:disabled):not(.disabled):active {
+  background-color: var(--4l-accent-dark);
+  border-color: var(--4l-accent-dark);
+  color: var(--4l-text);
+}
+
+.btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(18, 215, 211, 0.35);
+}
+
+/*
+CSS related to login.html and register.html
+*/
+
 .modal-content {
-  background-color: white;
-  opacity: 95%;
-  border-radius: 5px;
-  margin-top: 170px;
-  box-shadow: 0px 0px 5px white;
-  padding: 10px;
+  background-color: var(--4l-surface);
+  border: 1px solid var(--4l-border);
+  border-radius: 8px;
+  margin-top: 150px;
+  padding: 30px 10px 20px 10px;
+  color: var(--4l-text);
 }
 
 .login-logo {
-  margin-top: -60px;
   margin-bottom: 30px;
-  background-color: #cccccc;
-  box-shadow: 0px 0px 5px white;
   padding: 10px;
-  border-radius: 5px;
 }
 
 .login-logo  img {
-  height: 100px;
-  /*width: 100px;*/
+  height: 56px;
+  max-width: 100%;
 }
 
-.form-group input {
+.form-group input,
+.form-group input:focus {
   padding: 10px;
   border-radius: 5px;
+  background-color: var(--4l-bg-deep);
+  border: 1px solid var(--4l-border);
+  color: var(--4l-text);
+}
+
+.form-group input:focus {
+  border-color: var(--4l-accent);
+  box-shadow: 0 0 0 0.2rem rgba(18, 215, 211, 0.25);
+}
+
+.form-group input::placeholder {
+  color: var(--4l-text-muted);
+}
+
+.registry-redirect {
+  margin-top: 20px;
+  color: var(--4l-text-muted);
 }
 
 
@@ -31,8 +101,50 @@
 CSS related to listCourses.html
 */
 
+.navbar {
+  background-color: var(--4l-bg-deep);
+  border-bottom: 1px solid var(--4l-border);
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: var(--4l-text-muted);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: var(--4l-accent);
+}
 
 .courses-list {
-  padding: 15px;
-  display: inline-inline-block;
+  padding: 30px;
+}
+
+.courses-list .card {
+  overflow: hidden;
+}
+
+.courses-list .card-title {
+  font-size: 1.05rem;
+  margin-bottom: 0;
+}
+
+.courses-list .card,
+.courses-list .list-group-item {
+  background-color: var(--4l-surface);
+  border-color: var(--4l-border);
+  color: var(--4l-text);
+}
+
+.courses-list .card-title {
+  color: var(--4l-accent);
+}
+
+
+/*
+Versao da aplicacao no rodape
+*/
+
+.app-version {
+  color: var(--4l-text-muted);
+  font-size: 12px;
+  padding: 10px;
 }

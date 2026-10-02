@@ -1,6 +1,12 @@
-.venv/
-.coverage
 .git
-.*.swp
+.gitignore
+.venv/
 .env/
 __pycache__/
+.pytest_cache/
+.coverage
+.*.swp
+reports/
+mariadb_data/
+deploy/
+docs/
