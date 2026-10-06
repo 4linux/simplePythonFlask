@@ -134,13 +134,21 @@ docker build -t course_catalog:0.1 --build-arg APP_VERSION=0.1 .
 ├── tests/
 │   ├── unit/
 │   └── functional/
+├── manifest/               # manifests Kubernetes da versão regular do curso
 ├── Dockerfile
 └── docker-compose.yml
 ```
 
 ## Deploy
 
-Os manifests Kubernetes desta aplicação ficam em um repositório separado, o [course-catalog-deploy](https://github.com/4linux/course-catalog-deploy), no modelo GitOps. Este repositório contém somente o código, os testes e a imagem.
+Existem dois conjuntos de manifests Kubernetes, um para cada versão do curso:
+
+|Versão do curso|Manifests|
+|---|---|
+|Regular (Jenkins)|Pasta [manifest/](manifest/) deste repositório|
+|Argo CD (GitOps)|Repositório [course-catalog-deploy](https://github.com/4linux/course-catalog-deploy), com Kustomize|
+
+A pasta `manifest/` é mantida como está para o curso regular. Novas alterações de deploy devem ser feitas no repositório `course-catalog-deploy`.
 
 ## Problemas intencionais
 
