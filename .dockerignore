@@ -9,3 +9,4 @@ __pycache__/
 reports/
 mariadb_data/
 docs/
+manifest/
