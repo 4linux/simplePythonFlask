@@ -5,3 +5,4 @@ __pycache__/
 .coverage
 reports/
 mariadb_data
+.scannerwork/
